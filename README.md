@@ -7,11 +7,11 @@ This repository provides [ONNX](https://github.com/onnx/onnx) build dockerfile f
 1. Install DockerCE on your machine by following the instruction
     - [https://docs.docker.com/install/](https://docs.docker.com/install/)
 
-2. Create an empty directory
+2. Clone this repository
 
 ```sh
-mkdir onnx-build
-cd onnx-build
+git clone https://github.com/mshr-h/onnx-dockerfile-for-raspberry-pi
+cd onnx-dockerfile-for-raspberry-pi
 ```
 
 3. Run docker build
