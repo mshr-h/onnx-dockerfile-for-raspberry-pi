@@ -7,12 +7,27 @@ on:
     branches: [ "main" ]
 
 jobs:
-  matrix-job:
+  set-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      python: ${{ steps.set-matrix.outputs.python_versions }}
+      debian: ${{ steps.set-matrix.outputs.debian_versions }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: grab python/debian version from directory structure
+        id: set-matrix
+        run: |
+          python_list=$(ls -d */ | awk -F- '{ print $1 }' | sort | uniq | jq -R -s -c 'split("\n")[:-1]')
+          echo "::set-output name=python_versions::${python_list}"
+          debian_list=$(ls -d */ | awk -F- '{ print $2 }' | sort | uniq | jq -R -s -c 'split("\n")[:-1]')
+          echo "::set-output name=debian_versions::${debian_list}"
+  build-image:
+    needs: set-matrix
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.7", "3.8", "3.9", "3.10"]
-        debian: ["buster", "bullseye"]
+        python: ${{ fromJson(needs.set-matrix.outputs.python) }}
+        debian: ${{ fromJson(needs.set-matrix.outputs.debian) }}
     steps:
     - uses: actions/checkout@v3
     - name: Login to Docker Hub
