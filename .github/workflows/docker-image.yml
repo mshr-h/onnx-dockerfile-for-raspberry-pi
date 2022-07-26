@@ -7,8 +7,12 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  matrix-job:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.7", "3.8", "3.9", "3.10"]
+        debian: ["buster", "bullseye"]
     steps:
     - uses: actions/checkout@v3
     - name: Login to Docker Hub
@@ -16,5 +20,5 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build :latest
-      run: docker build . --file Dockerfile.arm32v7 --tag mshr-h/onnx-raspberry-pi-3:latest
+    - name: Build image
+      run: docker build . --file ${{ matrix.python }}-${{ matrix.debian }}-build/Dockerfile.arm32v7 --tag mshr-h/onnx-raspberry-pi-3:${{ matrix.python }}-${{ matrix.debian }}-build

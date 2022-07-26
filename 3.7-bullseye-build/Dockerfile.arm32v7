@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-python:latest-stretch-build
+FROM balenalib/raspberrypi3-python:3.7-bullseye-build
 
 ARG REPO_URL=https://github.com/onnx/onnx
 ARG BRANCH=master

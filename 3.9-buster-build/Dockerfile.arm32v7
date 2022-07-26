@@ -1,0 +1,34 @@
+FROM balenalib/raspberrypi3-python:3.9-buster-build
+
+ARG REPO_URL=https://github.com/onnx/onnx
+ARG BRANCH=master
+
+#Enforces cross-compilation through Qemu
+RUN [ "cross-build-start" ]
+
+RUN install_packages \
+    sudo \
+    build-essential \
+    cmake \
+    git \
+    python3 \
+    python3-pip \
+    python3-dev \
+    libprotoc-dev \
+    protobuf-compiler
+
+RUN pip3 install --upgrade pip setuptools wheel
+RUN pip3 install numpy
+
+# Prepare onnx Repo
+WORKDIR /code
+RUN git clone --single-branch --branch ${BRANCH} --recursive ${REPO_URL} onnx
+
+# Start the basic build
+WORKDIR /code/onnx
+RUN python3 setup.py bdist_wheel
+
+# Build Output
+RUN realpath /code/onnx/dist/onnx-*.whl
+
+RUN [ "cross-build-end" ]
