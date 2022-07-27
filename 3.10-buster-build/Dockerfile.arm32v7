@@ -1,8 +1,5 @@
 FROM balenalib/raspberrypi3-python:3.10-buster-build
 
-ARG REPO_URL=https://github.com/onnx/onnx
-ARG BRANCH=main
-
 #Enforces cross-compilation through Qemu
 RUN [ "cross-build-start" ]
 
@@ -21,13 +18,25 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 RUN pip3 install --upgrade pip setuptools wheel
 RUN pip3 install numpy
 
-# Prepare onnx Repo
+# Clone protobuf repo
 WORKDIR /code
-RUN git clone --single-branch --branch ${BRANCH} --recursive ${REPO_URL} onnx
+RUN git clone https://github.com/protocolbuffers/protobuf --recursive protobuf
+
+# Install protobuf from source
+WORKDIR /code/protobuf
+RUN git checkout v21.4
+RUN mkdir build_source && cd build_source && \
+  cmake ../cmake -Dprotobuf_BUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_SYSCONFDIR=/etc -DCMAKE_POSITION_INDEPENDENT_CODE=ON -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release && \
+  make -j$(nproc) && \
+  make install
+
+# Clone protobuf repo
+WORKDIR /code
+RUN git clone --single-branch --branch main--recursive $https://github.com/onnx/onnx onnx
 
 # Start the basic build
 WORKDIR /code/onnx
-RUN python3 setup.py bdist_wheel
+RUN CMAKE_ARGS=-DONNX_USE_LITE_PROTO=ON python3 setup.py bdist_wheel
 
 # Build Output
 RUN realpath /code/onnx/dist/onnx-*.whl
