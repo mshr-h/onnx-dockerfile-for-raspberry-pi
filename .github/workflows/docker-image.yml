@@ -25,6 +25,7 @@ jobs:
     needs: set-matrix
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python: ${{ fromJson(needs.set-matrix.outputs.python) }}
         debian: ${{ fromJson(needs.set-matrix.outputs.debian) }}
