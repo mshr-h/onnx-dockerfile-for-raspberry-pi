@@ -1,4 +1,10 @@
-FROM balenalib/raspberrypi3-python:3.10-bullseye-build
+base_images = [
+    "3.10-bullseye-build", "3.10-buster-build", "3.7-bullseye-build",
+    "3.7-buster-build", "3.8-bullseye-build", "3.8-buster-build",
+    "3.9-bullseye-build", "3.9-buster-build"
+]
+
+template = r"""FROM balenalib/raspberrypi3-python:{}
 
 #Enforces cross-compilation through Qemu
 RUN [ "cross-build-start" ]
@@ -43,3 +49,10 @@ RUN CMAKE_ARGS=-DONNX_USE_LITE_PROTO=ON python3 setup.py bdist_wheel
 RUN realpath /code/onnx/dist/onnx-*.whl
 
 RUN [ "cross-build-end" ]
+"""
+
+for i in base_images:
+    fname = "{}/Dockerfile.arm32v7".format(i)
+    print("Generating {}".format(fname))
+    with open(fname, mode="w") as f:
+        f.write(template.format(i))
