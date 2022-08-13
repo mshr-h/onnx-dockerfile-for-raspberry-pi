@@ -13,13 +13,19 @@ RUN apt update && apt install -y \
     autoconf \
     automake \
     build-essential \
-    cmake \
     curl \
     libtool \
     protobuf-compiler \
     libprotobuf-dev \
     unzip \
     zlib1g-dev
+
+# Install CMake from source
+WORKDIR /code
+RUN git clone https://github.com/Kitware/CMake
+RUN cd CMake && \
+    git checkout v3.24.0 && \
+    ./bootstrap && make && make install
 
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 RUN python3 -m pip install --upgrade pip setuptools wheel
