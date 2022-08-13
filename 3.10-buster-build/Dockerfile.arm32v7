@@ -25,7 +25,7 @@ RUN git clone --single-branch --branch main --recursive https://github.com/onnx/
 
 # Start the basic build
 WORKDIR /code/onnx
-RUN CMAKE_ARGS=-DONNX_USE_LITE_PROTO=ON python3 setup.py bdist_wheel
+RUN CMAKE_ARGS="-DONNX_USE_PROTOBUF_SHARED_LIBS=ON" python3 setup.py bdist_wheel
 
 # print output path
 RUN realpath /code/onnx/dist/onnx-*.whl
