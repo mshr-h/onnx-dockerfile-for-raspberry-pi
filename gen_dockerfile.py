@@ -51,8 +51,10 @@ RUN realpath /code/onnx/dist/onnx-*.whl
 RUN [ "cross-build-end" ]
 """
 
-for i in base_images:
-    fname = "{}/Dockerfile.arm32v7".format(i)
-    print("Generating {}".format(fname))
-    with open(fname, mode="w") as f:
-        f.write(template.format(i))
+if __name__ == "__main__":
+    print("Start generating Dockerfile.arm32v7")
+    for i in base_images:
+        fname = "{}/Dockerfile.arm32v7".format(i)
+        print("  Generating {}".format(fname))
+        with open(fname, mode="w") as f:
+            f.write(template.format(i))
