@@ -21,7 +21,7 @@ RUN python3 -m pip install numpy protobuf
 
 # Clone onnx repo
 WORKDIR /code
-RUN git clone --single-branch --branch main--recursive $https://github.com/onnx/onnx onnx
+RUN git clone --single-branch --branch main --recursive https://github.com/onnx/onnx onnx
 
 # Start the basic build
 WORKDIR /code/onnx
