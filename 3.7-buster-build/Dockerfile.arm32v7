@@ -10,12 +10,14 @@ RUN apt update && apt install -y \
     cmake \
     curl \
     libtool \
+    protobuf-compiler \
+    libprotobuf-dev \
     unzip \
     zlib1g-dev
 
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 RUN pip3 install --upgrade pip setuptools wheel
-RUN pip3 install numpy
+RUN pip3 install numpy protobuf
 
 # Clone protobuf repo
 WORKDIR /code
