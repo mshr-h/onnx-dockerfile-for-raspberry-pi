@@ -18,20 +18,6 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 RUN pip3 install --upgrade pip setuptools wheel cmake
 RUN pip3 install numpy protobuf
 
-# Clone protobuf repo
-WORKDIR /code
-RUN git clone https://github.com/protocolbuffers/protobuf protobuf
-
-# Install protobuf from source
-WORKDIR /code/protobuf
-RUN git checkout v21.4 && \
-  git submodule update --init --recursive
-RUN ./autogen.sh && \
-  ./configure --with-zlib && \
-  make -j$(nproc) && \
-  make install && \
-  sudo ldconfig
-
 # Clone onnx repo
 WORKDIR /code
 RUN git clone --single-branch --branch main--recursive $https://github.com/onnx/onnx onnx
