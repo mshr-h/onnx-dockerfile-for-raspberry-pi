@@ -21,8 +21,8 @@ RUN apt update && apt install -y \
     zlib1g-dev
 
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
-RUN pip3 install --upgrade pip setuptools wheel cmake
-RUN pip3 install numpy protobuf
+RUN pip3 install --upgrade pip setuptools wheel
+RUN pip3 install numpy protobuf cmake
 
 # Clone onnx repo
 WORKDIR /code
