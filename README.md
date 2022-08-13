@@ -1,6 +1,11 @@
 # Build ONNX Python wheel package for Raspberry Pi 3
 
-This repository provides [ONNX](https://github.com/onnx/onnx) build dockerfile for Raspberry Pi 3.
+This repository provides [ONNX](https://github.com/onnx/onnx) build dockerfile for Arm32v7l (Raspberry Pi 3).
+
+Currently we support the following conbination of software versions.
+
+- Python 3.7-3/10
+- Debian Bullseye/Buster
 
 ## Build instruction
 
@@ -14,9 +19,10 @@ git clone https://github.com/mshr-h/onnx-dockerfile-for-raspberry-pi
 cd onnx-dockerfile-for-raspberry-pi
 ```
 
-3. Run docker build
+3. Move to a folder where you want to build for and run docker build
 
 ```sh
+cd 3.7-bullseye-build # Debian bullseye with Python 3.7
 docker build -t onnx-arm32v7 -f Dockerfile.arm32v7 .
 ```
 
