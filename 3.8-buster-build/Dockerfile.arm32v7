@@ -16,10 +16,12 @@ RUN apt update && apt install -y \
 
 # Install CMake from source
 WORKDIR /code
-RUN git clone https://github.com/Kitware/CMake
-RUN cd CMake && \
+RUN git clone https://github.com/Kitware/CMake && \
+    cd CMake && \
     git checkout v3.24.0 && \
-    ./bootstrap && make && make install
+    ./bootstrap && make && make install && \
+    cd .. && \
+    rm -rf CMake
 
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 RUN python3 -m pip install --upgrade pip setuptools wheel
