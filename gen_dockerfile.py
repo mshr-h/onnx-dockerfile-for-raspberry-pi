@@ -25,7 +25,7 @@ WORKDIR /code
 RUN git clone https://github.com/Kitware/CMake && \
     cd CMake && \
     git checkout v3.24.0 && \
-    ./bootstrap && make && make install && \
+    ./bootstrap && make -j$(nproc) && make install && \
     cd .. && \
     rm -rf CMake
 
