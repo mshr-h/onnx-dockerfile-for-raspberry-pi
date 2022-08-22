@@ -9,7 +9,7 @@ Currently we support the following conbination of software versions.
 
 We provide pre-build docker images below.
 
-- [mshrh/onnx-raspberry-pi-3](https://hub.docker.com/repository/docker/mshrh/onnx-raspberry-pi-3)
+- [mshrh/onnx-raspberry-pi-3](https://hub.docker.com/r/mshrh/onnx-raspberry-pi-3)
 
 You can manually build image from Dockerfile by following instruction.
 
