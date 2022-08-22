@@ -11,7 +11,13 @@ We provide pre-build docker images below.
 
 - [mshrh/onnx-raspberry-pi-3](https://hub.docker.com/r/mshrh/onnx-raspberry-pi-3)
 
-You can manually build image from Dockerfile by following instruction.
+You can pull it with the command below.
+
+```bash
+docker pull mshrh/onnx-raspberry-pi-3
+```
+
+Or you can manually build image from Dockerfile by following instruction.
 
 ## Build instruction
 
